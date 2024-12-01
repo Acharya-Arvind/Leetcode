@@ -10,17 +10,17 @@
  * };
  */
 class Solution {
-    bool isSameTree(TreeNode* n1,TreeNode* n2 ){
-        if(!n1 && !n2){
+public:
+    bool help(TreeNode* n1,TreeNode* n2){
+        if(n1==NULL && n2==NULL){
             return true;
         }
-        if(n1 && n2 && n1->val == n2->val){
-            return isSameTree(n1->left,n2->right) && isSameTree(n1->right, n2->left);
+        if( n1 && n2 && n1->val==n2->val){
+            return help(n1->left,n2->right) && help(n1->right,n2->left);
         }
         return false;
     }
-public:
     bool isSymmetric(TreeNode* root) {
-       return isSameTree(root->left,root->right); 
+        return help(root->left,root->right);
     }
 };
