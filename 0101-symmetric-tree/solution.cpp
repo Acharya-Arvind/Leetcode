@@ -11,13 +11,10 @@
  */
 class Solution {
 public:
-    bool help(TreeNode* n1,TreeNode* n2){
-        if(n1==NULL && n2==NULL){
-            return true;
-        }
-        if( n1 && n2 && n1->val==n2->val){
-            return help(n1->left,n2->right) && help(n1->right,n2->left);
-        }
+    bool help(TreeNode* p,TreeNode* q){
+        if(!p && !q) return true;
+        if(p && q && p->val==q->val)
+            return help(p->left,q->right) && help(p->right,q->left);
         return false;
     }
     bool isSymmetric(TreeNode* root) {
