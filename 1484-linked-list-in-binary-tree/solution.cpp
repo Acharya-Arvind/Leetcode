@@ -22,22 +22,17 @@
 class Solution {
 public:
     bool check(TreeNode* root,ListNode* head){
-        if(!root) return false;
+        if(head==NULL) return true;
+        if(root==NULL) return false;
         if(root->val!=head->val) return false;
-        if(head->next==NULL) return true;
-        bool left=false;
-        bool right=false;
-        if(root->left && head->next && root->left->val==head->next->val)   left=check(root->left,head->next);
-        if(root->right && head->next && root->right->val==head->next->val)  right=check(root->right,head->next);
-        return left||right;
+        return check(root->left,head->next)|| check(root->right,head->next);
     }
     bool isSubPath(ListNode* head, TreeNode* root) {
-        if(!root) return false;
+        if(root==NULL) return false;
+        if(head==NULL) return true;
         if(root->val==head->val){
-            if(check(root,head)){
-                return true;
-            };
+            if(check(root,head)) return true;
         }
-        return isSubPath(head,root->left) || isSubPath(head,root->right);
+        return isSubPath(head,root->left)||isSubPath(head,root->right);
     }
 };
