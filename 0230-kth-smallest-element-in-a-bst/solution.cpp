@@ -11,18 +11,22 @@
  */
 class Solution {
 public:
-    void backtrack(TreeNode* root,vector<int>& ans){
+    void backtrack(TreeNode* root,int& ans,int& count){
         if(!root){
             return;
         }
-        backtrack(root->left,ans);
-        ans.push_back(root->val);
-        backtrack(root->right,ans);
+        backtrack(root->left,ans,count);
+        count--;
+        if(count==0){
+            ans=root->val;
+            return;
+        }
+        backtrack(root->right,ans,count);
         
     }
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> ans;
-        backtrack(root,ans);
-        return ans[k-1];
+        int ans=0;
+        backtrack(root,ans,k);
+        return ans;
     }
 };
