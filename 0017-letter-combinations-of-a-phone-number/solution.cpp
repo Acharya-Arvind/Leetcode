@@ -1,35 +1,28 @@
 class Solution {
 public:
-
-    void backtracks(string digits,map<char,string> letter,vector<string>& res,int i,string s){
-
+    void backtrack(vector<string>& ans,unordered_map<char,string>& mp,int ind,string s,string digits){
         if(s.length()==digits.length()){
-            res.push_back(s);
-            
+            ans.push_back(s);
             return;
         }
-        
-        string value=letter[digits[i]];
-        for(int j=0;j<value.length();j++){
-            backtracks(digits,letter,res,i+1,s+value[j]);
+        string str=mp[digits[ind]];
+        for(int i=0;i<str.length();i++){
+            backtrack(ans,mp,ind+1,s+str[i],digits);
         }
     }
     vector<string> letterCombinations(string digits) {
-        vector<string> res;
-        map<char, string> letter = {
-            {'2', "abc"},
-            {'3', "def"},
-            {'4', "ghi"},
-            {'5', "jkl"},
-            {'6', "mno"},
-            {'7', "pqrs"},
-            {'8', "tuv"},
-            {'9', "wxyz"}
-        };
-        string s="";
-        if(digits.length()==0) return res;
-        backtracks(digits,letter,res,0,s);
-        return res;
-
+        if(digits.length()==0) return {};
+        unordered_map<char,string> mp;
+        mp['2']="abc";
+        mp['3']="def";
+        mp['4']="ghi";
+        mp['5']="jkl";
+        mp['6']="mno";
+        mp['7']="pqrs";
+        mp['8']="tuv";
+        mp['9']="wxyz";
+        vector<string> ans;
+        backtrack(ans,mp,0,"",digits);
+        return ans;
     }
 };
