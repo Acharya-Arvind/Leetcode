@@ -1,14 +1,14 @@
 class Solution {
 public:
-    void backtrack(vector<vector<int>>& ans,vector<int>& nums,int ind,vector<int> res){
-        if(ind==nums.size()){
+ void backtrack(vector<int>& nums,vector<vector<int>>& ans,int ind,vector<int> res){
+        if(ind>=nums.size()){
             return;
         }
         for(int i=ind;i<nums.size();i++){
-            if(i>ind && nums[i]==nums[i-1]) continue;
+            if(i>ind && nums[i-1]==nums[i]) continue;
             res.push_back(nums[i]);
             ans.push_back(res);
-            backtrack(ans,nums,i+1,res);
+            backtrack(nums,ans,i+1,res);
             res.pop_back();
         }
     }
@@ -16,7 +16,8 @@ public:
         vector<vector<int>> ans;
         ans.push_back({});
         sort(nums.begin(),nums.end());
-        backtrack(ans,nums,0,{});
+        backtrack(nums,ans,0,{});
         return ans;
     }
 };
+
