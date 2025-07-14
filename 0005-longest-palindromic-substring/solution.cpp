@@ -1,56 +1,24 @@
 class Solution {
 public:
-
-    int check(string s,int left,int right,int& start,int& end){
-        int count=0;
-        if(left==right){
-            count++;
-            left--;
-            right++;
-        }
-
-        while(left>=0 && right<s.length()){
-            if(s[left]!=s[right]){
-                start=left++;
-                end=right--;
-                return count;
-            }
-            else{
-                left--;
-                right++;
-                count+=2;
-            }
-        }
-        start=left++;
-        end=right--;
-        return count;
-
-    }
     string longestPalindrome(string s) {
-        int start=0;
-        int end=0;
-        int len=0;
-        int s_start=0;
-        int s_end=0;
-        
-        for(int i=0;i<s.length();i++){
-            int x=check(s,i,i,start,end);
-            if(x>len){
-                len=x;
-                s_start=start;
-                s_end=end;
+        int m=s.length();
+        string ans;
+        int maxi=0;
+        vector<vector<int>> dp(m+1,vector<int> (m+1,0));
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=m;j++){
+                if (s[i - 1] == s[m-j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    int origStart = i - dp[i][j];          
+                    int revStart = m - j;                 
+                    if (origStart == revStart) {     
+                        if (dp[i][j] > maxi) {
+                            maxi = dp[i][j];
+                            ans = s.substr(origStart, maxi);
+                        }
+                    }
+                }
             }
-            int y=check(s,i,i+1,start,end);
-            if(y>len){
-                len=y;
-                s_start=start;
-                s_end=end;
-            }
-        }
-        string ans="";
-        
-        for(int i=s_start+1;i<s_end;i++){
-            ans+=s[i];
         }
         return ans;
     }
