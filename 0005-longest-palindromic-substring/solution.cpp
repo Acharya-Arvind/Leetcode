@@ -2,24 +2,32 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         int m=s.length();
-        string ans;
+        int start=0;
+        int end=0;
         int maxi=0;
-        vector<vector<int>> dp(m+1,vector<int> (m+1,0));
-        for(int i=1;i<=m;i++){
-            for(int j=1;j<=m;j++){
-                if (s[i - 1] == s[m-j]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                    int origStart = i - dp[i][j];          
-                    int revStart = m - j;                 
-                    if (origStart == revStart) {     
-                        if (dp[i][j] > maxi) {
-                            maxi = dp[i][j];
-                            ans = s.substr(origStart, maxi);
-                        }
+        vector<vector<int>> dp(m,vector<int> (m,0));
+        for(int i=0;i<m;i++) dp[i][i]=1;
+        for(int i=0;i<m-1;i++){
+            if(s[i]==s[i+1]){
+                dp[i][i+1]=1;
+                start=i;
+                end=i+1;
+                maxi=2;
+            }
+        }
+        for(int i=3;i<=m;i++){
+            for(int j=0;j<=m-i;j++){
+                if(s[j]==s[j+i-1] && dp[j+1][j+i-2]==1){
+                    dp[j][j+i-1]=1;
+                    if(maxi<i){
+                        maxi=i;
+                        start=j;
+                        end=j+i-1;
                     }
                 }
             }
         }
-        return ans;
+        // cout<<start<<" "<<end;
+        return s.substr(start,end-start+1);
     }
 };
